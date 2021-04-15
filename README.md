@@ -1,1 +1,1 @@
-tketz--client
+tketz-client

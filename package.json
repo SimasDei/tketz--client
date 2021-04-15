@@ -1,8 +1,8 @@
 {
-  "name": "tketz--client",
+  "name": "tketz-client",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/SimasDei/tketz--client.git",
+  "repository": "https://github.com/SimasDei/tketz-client.git",
   "author": "Simas <simas@simas-dei.com>",
   "license": "MIT",
   "scripts": {
