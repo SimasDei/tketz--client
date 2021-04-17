@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import Router from 'next/router';
 
-import { useRequest } from '../../hooks/';
+import { useRequest } from '../../hooks';
 import { HttpRequest } from '../../types/index';
 import { AUTH_API } from '../../utils';
 
-export const Signup: React.FC = () => {
+export const Signin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { doRequest, errors } = useRequest({
-    url: AUTH_API.SIGN_UP,
+    url: AUTH_API.SIGN_IN,
     method: HttpRequest.POST,
     body: { email, password },
     onSuccess: () => Router.push('/'),
@@ -22,7 +22,7 @@ export const Signup: React.FC = () => {
   };
   return (
     <form onSubmit={onSubmit}>
-      <h1>Sign up</h1>
+      <h1>Sign In</h1>
       <div className="form-group">
         <label htmlFor="email">Email Address</label>
         <input
@@ -44,9 +44,9 @@ export const Signup: React.FC = () => {
         />
       </div>
       {errors}
-      <button className="btn btn-primary">Sign Up</button>
+      <button className="btn btn-primary">Sign In</button>
     </form>
   );
 };
 
-export default Signup;
+export default Signin;

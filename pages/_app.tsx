@@ -1,10 +1,32 @@
+import { AppContext } from 'next/app';
+
+import { buildClient } from '../api';
+import { AUTH_API } from '../utils';
+
 import 'bootstrap/dist/css/bootstrap.css';
+import { User } from '../types';
 
-interface AppProprs {
-  Component: React.FC;
-  pageProps: any;
-}
+export const AppComponent = ({ Component, pageProps }) => {
+  return (
+    <main>
+      <nav>Header ! 🐼</nav>
+      <Component {...pageProps} />
+    </main>
+  );
+};
 
-export const App: React.FC<AppProprs> = ({ Component, pageProps }) => <Component {...pageProps} />;
+AppComponent.getInitialProps = async (context: AppContext): Promise<{ currentUser: User | null }> => {
+  try {
+    const { data } = await buildClient(context.ctx).get(AUTH_API.CURRENT_USER);
+    let pageProps = {};
+    if (context.Component.getInitialProps) {
+      pageProps = await context.Component.getInitialProps(context.ctx);
+    }
 
-export default App;
+    return { ...data, pageProps };
+  } catch (error) {
+    return { currentUser: null };
+  }
+};
+
+export default AppComponent;
