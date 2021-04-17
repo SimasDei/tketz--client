@@ -4,12 +4,17 @@ import axios from 'axios';
 export const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState([]);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await axios.post('/api/users/signup', { email, password });
-    console.log('🚀 ~ file: signup.tsx ~ line 12 ~ onSubmit ~ response', response.data);
+    try {
+      const response = await axios.post('/api/users/signup', { email, password });
+      console.log('🚀 ~ file: signup.tsx ~ line 12 ~ onSubmit ~ response', response.data);
+    } catch (error) {
+      setErrors(error.response.data.errors);
+    }
   };
   return (
     <form onSubmit={onSubmit}>
@@ -34,6 +39,16 @@ export const Signup: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
+      {errors.length > 0 && (
+        <div className="alert alert-danger">
+          <h4>Oh no! 🔥</h4>
+          <ul className="my-0">
+            {errors.map((error) => (
+              <li key={error.message}> {error.message} </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );
