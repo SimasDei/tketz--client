@@ -7,14 +7,21 @@ interface RequestProps {
   url: string;
   method: HttpRequest;
   body: any;
+  onSuccess: (data?: any) => void;
 }
 
-export const useRequest = ({ url, method, body }: RequestProps) => {
+export const useRequest = ({ url, method, body, onSuccess }: RequestProps) => {
   const [errors, setErrors] = useState(null);
 
   const doRequest = async () => {
     try {
+      setErrors(null);
       const response = await axios({ method, url, data: body });
+
+      if (onSuccess) {
+        onSuccess(response.data);
+      }
+
       return response.data;
     } catch (err) {
       setErrors(

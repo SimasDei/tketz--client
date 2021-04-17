@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Router from 'next/router';
 
 import { useRequest } from '../../hooks/';
 import { HttpRequest } from '../../types/index';
@@ -11,12 +12,12 @@ export const Signup: React.FC = () => {
     url: '/api/users/signup',
     method: HttpRequest.POST,
     body: { email, password },
+    onSuccess: () => Router.push('/'),
   });
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = doRequest();
-    console.log('🚀 ~ file: signup.tsx ~ line 15 ~ onSubmit ~ data', data);
+    const data = await doRequest();
   };
   return (
     <form onSubmit={onSubmit}>
