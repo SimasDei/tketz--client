@@ -1,7 +1,7 @@
 export const Home: React.FC = () => {
   return (
     <div>
-      <h2>Home</h2>
+      <h2>Tharr she blows ! 🐳🐳</h2>
     </div>
   );
 };
