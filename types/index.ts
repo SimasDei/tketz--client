@@ -9,3 +9,9 @@ export type Error = {
   message: string;
   field?: string;
 };
+
+export type User = {
+  email: string;
+  password?: string;
+  id?: string;
+};
