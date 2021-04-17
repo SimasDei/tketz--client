@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+import { HttpRequest, Error } from '../types';
+
 interface RequestProps {
   url: string;
   method: HttpRequest;
   body: any;
 }
 
-export default ({ url, method, body }: RequestProps) => {
+export const useRequest = ({ url, method, body }: RequestProps) => {
   const [errors, setErrors] = useState(null);
 
   const doRequest = async () => {
@@ -19,7 +21,7 @@ export default ({ url, method, body }: RequestProps) => {
         <div className="alert alert-danger">
           <h4>Oh no! 🔥</h4>
           <ul className="my-0">
-            {err.response.data.errors.map((error) => (
+            {err.response.data.errors.map((error: Error) => (
               <li key={error.message}> {error.message} </li>
             ))}
           </ul>
@@ -30,3 +32,5 @@ export default ({ url, method, body }: RequestProps) => {
 
   return { doRequest, errors };
 };
+
+export default useRequest;

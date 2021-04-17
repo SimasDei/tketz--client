@@ -1,20 +1,22 @@
 import { useState } from 'react';
-import axios from 'axios';
+
+import { useRequest } from '../../hooks/';
+import { HttpRequest } from '../../types/index';
 
 export const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
+
+  const { doRequest, errors } = useRequest({
+    url: '/api/users/signup',
+    method: HttpRequest.POST,
+    body: { email, password },
+  });
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    try {
-      const response = await axios.post('/api/users/signup', { email, password });
-      console.log('🚀 ~ file: signup.tsx ~ line 12 ~ onSubmit ~ response', response.data);
-    } catch (error) {
-      setErrors(error.response.data.errors);
-    }
+    const data = doRequest();
+    console.log('🚀 ~ file: signup.tsx ~ line 15 ~ onSubmit ~ data', data);
   };
   return (
     <form onSubmit={onSubmit}>
@@ -39,16 +41,7 @@ export const Signup: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      {errors.length > 0 && (
-        <div className="alert alert-danger">
-          <h4>Oh no! 🔥</h4>
-          <ul className="my-0">
-            {errors.map((error) => (
-              <li key={error.message}> {error.message} </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {errors}
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );
