@@ -8,6 +8,7 @@ const AUTH_API = {
   CURRENT_USER: '/api/users/currentuser',
   SIGN_IN: '/api/users/signin',
   SIGN_UP: '/api/users/signup',
+  SIGN_OUT: '/api/users/signout',
 };
 
 export { SERVICE_NAME, SERVICE_BASE_URL, AUTH_API, SSR_URL, MAIN_HOST };
