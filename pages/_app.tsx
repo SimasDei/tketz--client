@@ -1,15 +1,16 @@
 import { AppContext } from 'next/app';
 
+import { Navbar } from '../components/Navbar';
 import { buildClient } from '../api';
 import { AUTH_API } from '../utils';
+import { User } from '../types';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import { User } from '../types';
 
 export const AppComponent = ({ Component, pageProps }) => {
   return (
     <main>
-      <nav>Header ! 🐼</nav>
+      <Navbar currentUser={pageProps.currentUser} />
       <Component {...pageProps} />
     </main>
   );
